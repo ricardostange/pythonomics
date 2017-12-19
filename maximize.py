@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 
 
 # Estima a derivada da função no ponto
-def numeric_derivative(func, middle, delta = 0.00001): 
-    return (func(middle+delta)-func(middle))/delta
+def numeric_derivative(func, middle, delta = 10**-6): 
+    return (func(middle+delta)-func(middle-delta))/(2*delta)
 
 
 # Encontra o máximo de uma função côncava (método da bisseção)
-def biss(func, x_min, x_max, epsilon = 0.0001):
-    while(abs(x_min-x_max) < epsilon):
+def biss(func, x_min, x_max, epsilon = 10**(-10)):
+    while(abs(x_min-x_max) > epsilon):
         middle = (x_min + x_max)/2
         d = numeric_derivative(func, middle)
         if(d < 0):
@@ -32,7 +32,6 @@ def transform_utility(p, q, m, alpha = 0.5): # Retorna uma função utilidade qu
 def solve_utility_max(p, q, m, alpha = 0.5):
     assert p != 0 and q != 0
     util = transform_utility(p, q, m, alpha) # util se torna uma função de uma variável
-
     x_min = 0
     x_max = m/p
 
@@ -41,29 +40,16 @@ def solve_utility_max(p, q, m, alpha = 0.5):
     y = (m-p*x)/q
     return (x, y)
 
+def algebraic_solve(p, q, m, alpha = 0.5):
+    return (alpha*p/m, (1-alpha)*q/m)
 
+def solve_and_print(p, q, m, alpha = 0.5):
+    (x, y) = solve_utility_max(p, q, m, alpha)
+    print('px = ' + str(p) + ' py = ' + str(q) + ' m = ' + str(m) + ' a = ' + str(alpha) + '  => (x*, y*) = ' + str((round(x, 5),round(y, 5))))
 
-'''
-def show_changing(p, q, m, alpha = 0.5):
-    price_changing = [solve_utility_max(m*i/1000, q, m, alpha) for i in range(1, 1000)] # Preço variando com 999 pontos
-    plt.plot(price_changing)
-    plt.show()
-'''
-
+def test():
+    solve_and_print(1, 1, 10)
+    solve_and_print(3, 4, 10, 0.6)
     
 
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
+test()
