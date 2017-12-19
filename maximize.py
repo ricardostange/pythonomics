@@ -44,11 +44,12 @@ def solve_utility_max(p, q, m, alpha = 0.5):
 
 
 
+'''
 def show_changing(p, q, m, alpha = 0.5):
     price_changing = [solve_utility_max(m*i/1000, q, m, alpha) for i in range(1, 1000)] # Preço variando com 999 pontos
     plt.plot(price_changing)
     plt.show()
-
+'''
 
 
 
