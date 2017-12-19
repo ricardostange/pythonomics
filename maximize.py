@@ -41,12 +41,15 @@ def solve_utility_max(p, q, m, alpha = 0.5):
     return (x, y)
 
 def algebraic_solve(p, q, m, alpha = 0.5):
-    return (alpha*p/m, (1-alpha)*q/m)
+    return (alpha*m/p, (1-alpha)*m/q)
 
+
+# Calcula e imprime exemplo, e compara com solução algébrica para determinar o erro
 def solve_and_print(p, q, m, alpha = 0.5):
     (x, y) = solve_utility_max(p, q, m, alpha)
     print('px = ' + str(p) + ' py = ' + str(q) + ' m = ' + str(m) + ' a = ' + str(alpha) + '  => (x*, y*) = ' + str((round(x, 5),round(y, 5))))
-
+    (xa, ya) = algebraic_solve(p, q, m, alpha)
+    print('Erro médio: ' + str((abs(xa-x)+ abs(ya-y))/2))
 def test():
     solve_and_print(1, 1, 10)
     solve_and_print(3, 4, 10, 0.6)
