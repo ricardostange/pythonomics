@@ -11,16 +11,14 @@ def numeric_derivative(func, middle, delta = 0.00001):
 
 # Encontra o máximo de uma função côncava (método da bisseção)
 def biss(func, x_min, x_max, epsilon = 0.0001):
-    middle = (x_min + x_max)/2
-    d = numeric_derivative(func, middle)
-    if(abs(x_min-x_max) < epsilon):
-        return middle
-    if(d < 0):
-        return first(func, x_min, middle) # Derivada negativa implica que o máximo se encontra no primeiro segmento
-    else:
-        return first(func, middle, x_max) # Derivada positiva implica que o máximo se encontra no segundo segmento
-
-
+    while(abs(x_min-x_max) < epsilon):
+        middle = (x_min + x_max)/2
+        d = numeric_derivative(func, middle)
+        if(d < 0):
+            x_max = middle
+        else:
+            x_min = middle
+    return (x_min+x_max)/2
 
 def utility(x, y, alpha = 0.5):
     assert x >= 0 and y >= 0
@@ -32,6 +30,7 @@ def transform_utility(p, q, m, alpha = 0.5): # Retorna uma função utilidade qu
 
 
 def solve_utility_max(p, q, m, alpha = 0.5):
+    assert p != 0 and q != 0
     util = transform_utility(p, q, m, alpha) # util se torna uma função de uma variável
 
     x_min = 0
@@ -51,6 +50,7 @@ def show_changing(p, q, m, alpha = 0.5):
     plt.show()
 '''
 
+    
 
 
 
